@@ -1,0 +1,76 @@
+package Repositories;
+
+import domains.Student;
+import domains.Variant;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+@Getter
+@Setter
+public class VariantsRepo implements RepoInterface<Variant>{
+    private long idSequence;
+    private long elementsCount;
+    private List<Variant> variantsList;
+
+    public VariantsRepo(){
+        this.variantsList = new ArrayList<>();
+    }
+
+
+    @Override
+    public void Post(Variant element) {
+        boolean exists = false;
+        for (Variant var : this.variantsList) {
+            exists = var.getPathToFile().equals(element.getPathToFile());
+            if (exists) break;
+        }
+        if (!exists) {
+            Variant variant = new Variant();
+            variant.setId(++idSequence);
+            elementsCount++;
+            variant.setPathToFile(element.getPathToFile());
+            this.variantsList.add(variant);
+        }
+    }
+
+    @Override
+    public Variant GetById(long id) {
+        try{
+            Variant variant = new Variant();
+            Variant foundVariant = this.variantsList.stream().filter(variant1 -> variant1.getId() == id).findFirst().get();
+            variant.setId(id);
+            variant.setPathToFile(foundVariant.getPathToFile());
+            return variant;
+        }catch (NoSuchElementException e){
+            return null;
+        }
+    }
+
+    @Override
+    public void PatchById(long existedId, Variant editedElement) {
+        Variant existedVariant = this.GetById(existedId);
+        boolean exists = false;
+        for (Variant var : this.variantsList) {
+            exists = var.getPathToFile().equals(editedElement.getPathToFile());
+            if (exists) break;
+        }
+        if (existedVariant != null && !exists){
+            int index = this.variantsList.indexOf(existedVariant);
+            existedVariant.setPathToFile(editedElement.getPathToFile());
+            this.variantsList.set(index, existedVariant);
+        }
+    }
+
+    @Override
+    public void DeleteById(long id) {
+        Variant variant = this.GetById(id);
+        if (variant != null){
+            elementsCount--;
+            this.variantsList.remove(variant);
+        }
+    }
+}
