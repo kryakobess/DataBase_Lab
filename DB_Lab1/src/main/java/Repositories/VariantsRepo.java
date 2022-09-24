@@ -73,4 +73,10 @@ public class VariantsRepo implements RepoInterface<Variant>{
             this.variantsList.remove(variant);
         }
     }
+
+    public void GenerateVariants(int count){
+        for (int i = 1; i <= count; ++i){
+            this.Post(new Variant("var"+i));
+        }
+    }
 }
