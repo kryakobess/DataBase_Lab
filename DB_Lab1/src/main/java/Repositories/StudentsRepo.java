@@ -3,14 +3,21 @@ package Repositories;
 import domains.Student;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Getter
 @Setter
-public class StudentsRepo implements RepoInterface<Student>{
+@ToString
+public class StudentsRepo implements RepoInterface<Student>, Serializable {
+    @Serial
+    private static final long serialVersionUID = 899L;
     private long idSequence;
     private long elementsCount;
     private List<Student>  studentsList;
@@ -72,6 +79,19 @@ public class StudentsRepo implements RepoInterface<Student>{
             existedStudent.setPatronymic(editedElement.getPatronymic());
             this.studentsList.set(index, existedStudent);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StudentsRepo that = (StudentsRepo) o;
+        return idSequence == that.idSequence && elementsCount == that.elementsCount && studentsList.equals(that.studentsList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idSequence, elementsCount, studentsList);
     }
 
     @Override

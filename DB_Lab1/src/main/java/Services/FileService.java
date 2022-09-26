@@ -6,8 +6,8 @@ import Repositories.VariantsRepo;
 import domains.Student;
 import domains.Variant;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Path;
 import java.util.Scanner;
 
 public class FileService {
@@ -22,6 +22,21 @@ public class FileService {
         } catch (IOException e){
             System.out.println("File don't exist");
         }
+    }
+    public void saveObject(Object object, String path) throws IOException {
+        FileOutputStream outputStream = new FileOutputStream(path);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+
+        objectOutputStream.writeObject(object);
+
+        objectOutputStream.close();
+    }
+
+    public Object loadObject(String path) throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream(path);
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+        return objectInputStream.readObject();
     }
 
 }

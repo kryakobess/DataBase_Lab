@@ -1,19 +1,22 @@
 package Repositories;
 
-import domains.Student;
+import domains.StudentsVariant;
 import domains.TestingTable;
-import domains.Variant;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.*;
+
 
 @Getter
 @Setter
-public class TestingTableRepo {
+@ToString
+public class TestingTableRepo implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 899L;
     private List<TestingTable> testingTableList;
 
     public TestingTableRepo() {
@@ -28,13 +31,26 @@ public class TestingTableRepo {
         }
     }
 
-    public Map<Student, Variant> ParseTestingTable(StudentsRepo studentsRepo, VariantsRepo variantsRepo){
-        Map<Student, Variant> studentVariantMap = new HashMap<>();
+    public List<StudentsVariant> ParseTestingTable(StudentsRepo studentsRepo, VariantsRepo variantsRepo){
+       List <StudentsVariant> joinList = new ArrayList<>();
         for (TestingTable testingTable : this.getTestingTableList()){
             if (testingTable == null) return null;
-            studentVariantMap.put(studentsRepo.GetById(testingTable.getStudentId()),
-                                  variantsRepo.GetById(testingTable.getVariantId()));
+            joinList.add(new StudentsVariant(studentsRepo.GetById(testingTable.getStudentId()),
+                                  variantsRepo.GetById(testingTable.getVariantId())));
         }
-        return studentVariantMap;
+        return joinList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TestingTableRepo that = (TestingTableRepo) o;
+        return testingTableList.equals(that.testingTableList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(testingTableList);
     }
 }

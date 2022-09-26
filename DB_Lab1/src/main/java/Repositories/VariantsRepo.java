@@ -4,14 +4,21 @@ import domains.Student;
 import domains.Variant;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Getter
 @Setter
-public class VariantsRepo implements RepoInterface<Variant>{
+@ToString
+public class VariantsRepo implements RepoInterface<Variant>, Serializable {
+    @Serial
+    private static final long serialVersionUID = 899L;
     private long idSequence;
     private long elementsCount;
     private List<Variant> variantsList;
@@ -72,6 +79,19 @@ public class VariantsRepo implements RepoInterface<Variant>{
             elementsCount--;
             this.variantsList.remove(variant);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VariantsRepo that = (VariantsRepo) o;
+        return idSequence == that.idSequence && elementsCount == that.elementsCount && variantsList.equals(that.variantsList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idSequence, elementsCount, variantsList);
     }
 
     public void GenerateVariants(int count){

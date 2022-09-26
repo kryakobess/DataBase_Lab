@@ -2,10 +2,18 @@ package domains;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Getter
 @Setter
-public class TestingTable {
+@ToString
+public class TestingTable implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 899L;
     private long studentId;
     private long variantId;
 
@@ -13,4 +21,19 @@ public class TestingTable {
         this.studentId = studentId;
         this.variantId = variantId;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TestingTable that = (TestingTable) o;
+        return studentId == that.studentId && variantId == that.variantId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(studentId, variantId);
+    }
+
+    public TestingTable() {}
 }
