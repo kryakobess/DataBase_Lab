@@ -13,7 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <description>Telegram bot on java</description>
     <properties>
-        <java.version>16</java.version>
+        <java.version>8</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -36,7 +36,6 @@
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>

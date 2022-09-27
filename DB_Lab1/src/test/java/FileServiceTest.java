@@ -3,7 +3,6 @@ import Repositories.TestingTableRepo;
 import Repositories.VariantsRepo;
 import Services.FileService;
 import domains.Student;
-import domains.TestingTable;
 import domains.Variant;
 import org.junit.Assert;
 import org.junit.Test;

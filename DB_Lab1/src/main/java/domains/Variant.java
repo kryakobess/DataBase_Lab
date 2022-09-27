@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.io.Serial;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -12,7 +12,7 @@ import java.util.Objects;
 @Setter
 @ToString
 public class Variant implements Serializable {
-    @Serial
+
     private static final long serialVersionUID = 899L;
     private long id;
     private String pathToFile;
