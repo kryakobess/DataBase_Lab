@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
@@ -15,9 +16,16 @@ public class Student implements Serializable {
     @Serial
     private static final long serialVersionUID = 899L;
     private long id;
+    @NotBlank(message = "You better remember their name")
     private String name;
+    @NotBlank(message = "What are their surname boiii?")
+    private String surname;
+    private String patronymic;
 
     public Student() {
+        this.name = null;
+        this.surname = null;
+        this.patronymic = null;
     }
 
     public Student(String name, String surname, String patronymic) {
@@ -25,10 +33,12 @@ public class Student implements Serializable {
         this.surname = surname;
         this.patronymic = patronymic;
     }
-
-    private String surname;
-    private String patronymic;
-
+    public Student(long id, String name, String surname, String patronymic) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.patronymic = patronymic;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -42,10 +52,4 @@ public class Student implements Serializable {
         return Objects.hash(id, name, surname, patronymic);
     }
 
-    public Student(long id, String name, String surname, String patronymic) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.patronymic = patronymic;
-    }
 }

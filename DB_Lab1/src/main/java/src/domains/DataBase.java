@@ -13,9 +13,17 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @ToString
 public class DataBase {
+    private int id;
     @NotBlank(message = "You have to write name!")
     private String name;
     private StudentsRepo studentsRepo;
     private VariantsRepo variantsRepo;
     private TestingTableRepo testingTableRepo;
+
+    public DataBase(){
+        this.name = null;
+        this.studentsRepo = new StudentsRepo();
+        this.variantsRepo = new VariantsRepo();
+        this.testingTableRepo = new TestingTableRepo();
+    }
 }

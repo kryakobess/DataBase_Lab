@@ -1,5 +1,7 @@
 package src.Repositories;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 import src.domains.DataBase;
 
@@ -7,8 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Getter
+@Setter
 public class DBRepo implements RepoInterface<DataBase>{
-
+    private int idSequence;
+    private int elemCount;
     private List<DataBase> dataBaseList;
 
     public DBRepo() {
@@ -28,7 +33,8 @@ public class DBRepo implements RepoInterface<DataBase>{
             dataBase.setStudentsRepo(element.getStudentsRepo());
             dataBase.setVariantsRepo(element.getVariantsRepo());
             dataBase.setTestingTableRepo(element.getTestingTableRepo());
-
+            elemCount++;
+            dataBase.setId(++idSequence);
             dataBaseList.add(dataBase);
             return 0;
         }
@@ -37,7 +43,7 @@ public class DBRepo implements RepoInterface<DataBase>{
 
     @Override
     public DataBase GetById(long id) {
-        return dataBaseList.get((int)id);
+        return dataBaseList.get((int)id-1);
     }
 
     public DataBase GetByName(String name){
@@ -53,6 +59,7 @@ public class DBRepo implements RepoInterface<DataBase>{
 
     @Override
     public void DeleteById(long id) {
+        elemCount--;
         this.dataBaseList.remove((int)id);
     }
 }

@@ -32,13 +32,13 @@ public class MainMenuController {
         return "createDB";
     }
     @PostMapping("/createDB")
-    public String createDB(@ModelAttribute("newDB")@Valid DataBase db, Errors errors){
+    public String createDB(@ModelAttribute("newDB") @Valid DataBase db, Errors errors){
         if (errors.hasErrors()){
-            return "redirect:/createDB";
+            return "/createDB";
         }
         if (dbRepo.Post(db) == -1){
             return "redirect:/createDB?exists=true";
         }
-        return "mainMenu";
+        return "redirect:/dblist";
     }
 }

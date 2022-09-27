@@ -5,11 +5,14 @@
     <title>DataBase Creation</title>
 </head>
 <body>
+<h1>Create your DataBase</h1>
     <form th:method="POST" th:action="@{/createDB}" th:object="${newDB}">
         <input type="text" th:field="*{name}" placeholder="Enter DB name"/>
-            <div th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">Text error</div>
+            <div th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
             <div style="color: crimson" th:text="${ExistsWarning}"></div>
         <button type="submit">Submit</button>
     </form>
+    <p/>
+    <a th:href="@{/}">Return to main menu</a>
 </body>
 </html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title th:text="${db.getName()}"></title>
+</head>
+<body>
+    <a th:href="@{/}">Return to main menu</a>
+    <h3 th:text="'Your DB: ' + ${db.getName()}">Your DB:</h3>
+            <table>
+                <caption>Students Table</caption>
+                <tr><th>Id</th><th>Name</th><th>Surname</th><th>Patronymic</th></tr>
+                <tr th:each="student: ${studentsTable}">
+                    <th th:text="${student.getId()}"></th>
+                    <th th:text="${student.getName()}"></th>
+                    <th th:text="${student.getSurname()}"></th>
+                    <th th:text="${student.getPatronymic()}"></th>
+                </tr>
+            </table>
+
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/addOne'})}" th:object="${student}">
+        <h3>Add student</h3>
+        <input type="text" th:field="*{name}" placeholder="Name"/>
+            <div th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+        <input type="text" th:field="*{surname}" placeholder="Surname"/>
+            <div th:if = "${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
+        <input type="text" th:field="*{patronymic}" placeholder="Patronymic"/>
+        <button type="submit">Add</button>
+        <div style="color: crimson" th:text="${ExistingWarning}"></div>
+    </form>
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/addStudFromFile'})}" th:object="${student}">
+        <h3>Add student</h3>
+        <input type="text" th:field="*{name}" placeholder="Name"/>
+        <div th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+        <input type="text" th:field="*{surname}" placeholder="Surname"/>
+        <div th:if = "${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
+        <input type="text" th:field="*{patronymic}" placeholder="Patronymic"/>
+        <button type="submit">Add</button>
+        <div style="color: crimson" th:text="${ExistingWarning}"></div>
+    </form>
+
+    <a></a>
+</body>
+</html>
