@@ -28,17 +28,11 @@
         <button type="submit">Add</button>
         <div style="color: crimson" th:text="${ExistingWarning}"></div>
     </form>
-    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/addStudFromFile'})}" th:object="${student}">
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/addStudFromFile'})}" th:object="${path}">
         <h3>Add student</h3>
-        <input type="text" th:field="*{name}" placeholder="Name"/>
-        <div th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
-        <input type="text" th:field="*{surname}" placeholder="Surname"/>
-        <div th:if = "${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
-        <input type="text" th:field="*{patronymic}" placeholder="Patronymic"/>
-        <button type="submit">Add</button>
-        <div style="color: crimson" th:text="${ExistingWarning}"></div>
+        <input type="text" th:field="*{path}" placeholder="Full path to file"/>
+        <button type="submit">Load</button>
+        <div style="color: crimson" th:text="${NoFileWarning}"></div>
     </form>
-
-    <a></a>
 </body>
 </html>
