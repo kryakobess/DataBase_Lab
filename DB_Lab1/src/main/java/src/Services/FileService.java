@@ -1,13 +1,9 @@
-package Services;
+package src.Services;
 
-import Repositories.StudentsRepo;
-import Repositories.TestingTableRepo;
-import Repositories.VariantsRepo;
-import domains.Student;
-import domains.Variant;
+import src.Repositories.StudentsRepo;
+import src.domains.Student;
 
 import java.io.*;
-import java.nio.file.Path;
 import java.util.Scanner;
 
 public class FileService {

@@ -1,14 +1,13 @@
-import Repositories.StudentsRepo;
-import Repositories.TestingTableRepo;
-import Repositories.VariantsRepo;
-import domains.Student;
-import domains.StudentsVariant;
-import domains.Variant;
+import src.Repositories.StudentsRepo;
+import src.Repositories.TestingTableRepo;
+import src.Repositories.VariantsRepo;
+import src.domains.Student;
+import src.domains.StudentsVariant;
+import src.domains.Variant;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.Map;
 
 
 public class TestingTableRepoTest {

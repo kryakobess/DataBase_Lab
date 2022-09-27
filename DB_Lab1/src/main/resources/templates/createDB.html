@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>DataBase Creation</title>
+</head>
+<body>
+    <form th:method="POST" th:action="@{/createDB}" th:object="${newDB}">
+        <input type="text" th:field="*{name}" placeholder="Enter DB name"/>
+            <div th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">Text error</div>
+            <div style="color: crimson" th:text="${ExistsWarning}"></div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

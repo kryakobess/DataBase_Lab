@@ -1,10 +1,9 @@
-import Repositories.StudentsRepo;
-import Repositories.TestingTableRepo;
-import Repositories.VariantsRepo;
-import Services.FileService;
-import domains.Student;
-import domains.TestingTable;
-import domains.Variant;
+import src.Repositories.StudentsRepo;
+import src.Repositories.TestingTableRepo;
+import src.Repositories.VariantsRepo;
+import src.Services.FileService;
+import src.domains.Student;
+import src.domains.Variant;
 import org.junit.Assert;
 import org.junit.Test;
 

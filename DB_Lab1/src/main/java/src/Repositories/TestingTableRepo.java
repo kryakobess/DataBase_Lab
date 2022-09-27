@@ -1,7 +1,7 @@
-package Repositories;
+package src.Repositories;
 
-import domains.StudentsVariant;
-import domains.TestingTable;
+import src.domains.StudentsVariant;
+import src.domains.TestingTable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
