@@ -44,7 +44,6 @@ public class DataBasesController {
         model.addAttribute("variantTable", db.getVariantsRepo().getVariantsList());
         model.addAttribute("student", new Student());
         model.addAttribute("variant", new Variant());
-        model.addAttribute("path", new File(""));
         return "dataBaseById";
     }
     @PostMapping("/dblist/{id}/addOne")
@@ -58,23 +57,10 @@ public class DataBasesController {
         return "redirect:/dblist/"+id;
     }
     @PostMapping("/dblist/{id}/addStudFromFile")
-    public String addStudentsFromFile(@PathVariable("id") int id, @ModelAttribute("path") File path){
-        if (path.getPath().isEmpty()) return "redirect:/dblist/"+id;
-        if (fileService.loadStudentsFromFile(path.getPath(), dbRepo.GetById(id).getStudentsRepo()) == -1)
+    public String addStudentsFromFile(@PathVariable("id") int id, String path){
+        if (path.isEmpty()) return "redirect:/dblist/"+id;
+        if (fileService.loadStudentsFromFile(path, dbRepo.GetById(id).getStudentsRepo()) == -1)
             return "redirect:/dblist/"+id+"?noFile=true";
-        return "redirect:/dblist/"+id;
-    }
-    @PostMapping("/dblist/{id}/deleteStudent")
-    public String deleteStudent(@PathVariable("id") int id, int studentID){
-        dbRepo.GetById(id).getStudentsRepo().DeleteById(studentID);
-        return "redirect:/dblist/"+id;
-    }
-    @PostMapping("/dblist/{id}/addVariant")
-    public String addVariant(@PathVariable("id") int id, @ModelAttribute("variant") @Valid Variant variant, Errors errors){
-        if (errors.hasErrors()){
-            return "redirect:/dblist/"+id;
-        }
-        dbRepo.GetById(id).getVariantsRepo().Post(variant);
         return "redirect:/dblist/"+id;
     }
     @PostMapping("/dblist/{id}/patchStudent")
@@ -85,9 +71,38 @@ public class DataBasesController {
         dbRepo.GetById(id).getStudentsRepo().PatchById(student.getId(), student);
         return "redirect:/dblist/"+id;
     }
+    @PostMapping("/dblist/{id}/deleteStudent")
+    public String deleteStudent(@PathVariable("id") int id, String studentID){
+        if (studentID.isEmpty()) return "redirect:/dblist/"+id;
+        dbRepo.GetById(id).getStudentsRepo().DeleteById(Integer.parseInt(studentID));
+        return "redirect:/dblist/"+id;
+    }
+    @PostMapping("/dblist/{id}/addVariant")
+    public String addVariant(@PathVariable("id") int id, @ModelAttribute("variant") @Valid Variant variant, Errors errors){
+        if (errors.hasErrors()){
+            return "redirect:/dblist/"+id;
+        }
+        dbRepo.GetById(id).getVariantsRepo().Post(variant);
+        return "redirect:/dblist/"+id;
+    }
     @PostMapping("/dblist/{id}/generateVar")
-    public String generateVariants(@PathVariable("id") int id, int varCount){
-        dbRepo.GetById(id).getVariantsRepo().GenerateVariants(varCount);
+    public String generateVariants(@PathVariable("id") int id, String varCount){
+        if (varCount.isEmpty()) return "redirect:/dblist/"+id;
+        dbRepo.GetById(id).getVariantsRepo().GenerateVariants(Integer.parseInt(varCount));
+        return "redirect:/dblist/"+id;
+    }
+    @PostMapping("/dblist/{id}/patchVariant")
+    public String patchVariant(@PathVariable("id") int id, @ModelAttribute("variant") @Valid Variant variant, Errors errors){
+        if (errors.hasErrors()){
+            return "redirect:/dblist/"+id;
+        }
+        dbRepo.GetById(id).getVariantsRepo().PatchById(variant.getId(), variant);
+        return "redirect:/dblist/"+id;
+    }
+    @PostMapping("/dblist/{id}/deleteVariant")
+    public String deleteVariant(@PathVariable("id") int id, String variantID){
+        if (variantID.isEmpty()) return "redirect:/dblist/"+id;
+        dbRepo.GetById(id).getVariantsRepo().DeleteById(Integer.parseInt(variantID));
         return "redirect:/dblist/"+id;
     }
 }

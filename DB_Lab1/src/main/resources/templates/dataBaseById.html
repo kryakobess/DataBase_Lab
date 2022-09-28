@@ -34,9 +34,9 @@
         <div style="color: crimson" th:text="${ExistingWarning}"></div>
     </form>
 
-    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/addStudFromFile'})}" th:object="${path}">
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/addStudFromFile'})}">
         <h3>Add students from file</h3>
-        <input class="InputType-1" type="text" th:field="*{path}" placeholder="Full path to file"/>
+        <input class="InputType-1" name="path" type="text" placeholder="Full path to file"/>
         <button class="button" type="submit">Load</button>
         <div style="color: crimson" th:text="${NoFileWarning}"></div>
     </form>
@@ -84,7 +84,19 @@
         <input class="InputType-1" type="text" name="varCount" placeholder="Variant's count"/>
         <button class="button" type="submit">Generate</button>
     </form>
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/patchVariant'})}" th:object="${variant}">
+        <h3>Edit Variant by id</h3>
+        <input class="InputType-1" type="text" th:field="*{id}" placeholder="Enter ID of Variant"/><p/>
+        <input class="InputType-1" type="text" th:field="*{pathToFile}" placeholder="Variant name"/>
+        <div th:if = "${#fields.hasErrors('pathToFile')}" th:errors="*{pathToFile}">Name error</div>
+        <button class="button" type="submit">Patch</button>
+    </form>
 
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/deleteVariant'})}">
+        <h3>Delete Variant by ID</h3>
+        <input class="InputType-1" type="text" name="variantID" placeholder="Enter ID of Variant"/>
+        <button class="button" type="submit">Delete</button>
+    </form>
 </div>
 </body>
 </html>
