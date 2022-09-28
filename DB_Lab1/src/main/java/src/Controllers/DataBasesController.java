@@ -9,6 +9,7 @@ import src.Repositories.DBRepo;
 import src.Services.FileService;
 import src.domains.DataBase;
 import src.domains.Student;
+import src.domains.Variant;
 
 import javax.validation.Valid;
 import java.io.File;
@@ -38,10 +39,11 @@ public class DataBasesController {
         if (db == null) return "redirect:/dblist";
         model.addAttribute("db", dbRepo.GetById(id));
         if (exists) model.addAttribute("ExistingWarning", "Such student already exists");
-        if (noFile) model.addAttribute("NoFileWarning", "Can't find such file on pc");
+        if (noFile) model.addAttribute("NoFileWarning", "Can't find such file");
         model.addAttribute("studentsTable", db.getStudentsRepo().getStudentsList());
         model.addAttribute("variantTable", db.getVariantsRepo().getVariantsList());
         model.addAttribute("student", new Student());
+        model.addAttribute("variant", new Variant());
         model.addAttribute("path", new File(""));
         return "dataBaseById";
     }
@@ -60,6 +62,19 @@ public class DataBasesController {
         if (path.getPath().isEmpty()) return "redirect:/dblist/"+id;
         if (fileService.loadStudentsFromFile(path.getPath(), dbRepo.GetById(id).getStudentsRepo()) == -1)
             return "redirect:/dblist/"+id+"?noFile=true";
+        return "redirect:/dblist/"+id;
+    }
+    @PostMapping("/dblist/{id}/deleteStudent")
+    public String deleteStudent(@PathVariable("id") int id, int studentID){
+        dbRepo.GetById(id).getStudentsRepo().DeleteById(studentID);
+        return "redirect:/dblist/"+id;
+    }
+    @PostMapping("/dblist/{id}/addVariant")
+    public String addVariant(@PathVariable("id") int id, @ModelAttribute("variant") @Valid Variant variant, Errors errors){
+        if (errors.hasErrors()){
+            return "redirect:/dblist"+id;
+        }
+        dbRepo.GetById(id).getVariantsRepo().Post(variant);
         return "redirect:/dblist/"+id;
     }
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
@@ -15,6 +16,7 @@ public class Variant implements Serializable {
     @Serial
     private static final long serialVersionUID = 899L;
     private long id;
+    @NotBlank(message = "Variant should contain its name")
     private String pathToFile;
 
     public Variant() {
