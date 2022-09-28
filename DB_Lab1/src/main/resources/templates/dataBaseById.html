@@ -7,68 +7,130 @@
 <body>
     <a th:href="@{/}">Return to main menu</a>
     <h3 th:text="'Your DB: ' + ${db.getName()}">Your DB:</h3>
-    <table>
+<div class="bblock">
+    <table class="table">
+        <caption style="color: blueviolet">Students Table</caption>
+        <thead>
+            <tr><th>Id</th><th>Name</th><th>Surname</th><th>Patronymic</th></tr>
+        </thead>
+        <tbody>
+            <tr th:each="student: ${studentsTable}">
+                <th th:text="${student.getId()}"></th>
+                <th th:text="${student.getName()}"></th>
+                <th th:text="${student.getSurname()}"></th>
+                <th th:text="${student.getPatronymic()}"></th>
+            </tr>
+        </tbody>
+    </table>
+
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/addOne'})}" th:object="${student}">
+        <h3>Add student</h3>
+        <input class="InputType-1" type="text" th:field="*{name}" placeholder="Name"/>
+        <div th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+        <input class="InputType-1" type="text" th:field="*{surname}" placeholder="Surname"/>
+        <div th:if = "${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
+        <input class="InputType-1" type="text" th:field="*{patronymic}" placeholder="Patronymic"/>
+        <button class="button" type="submit">Add</button>
+        <div style="color: crimson" th:text="${ExistingWarning}"></div>
+    </form>
+
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/addStudFromFile'})}" th:object="${path}">
+        <h3>Add students from file</h3>
+        <input class="InputType-1" type="text" th:field="*{path}" placeholder="Full path to file"/>
+        <button class="button" type="submit">Load</button>
+        <div style="color: crimson" th:text="${NoFileWarning}"></div>
+    </form>
+
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/patchStudent'})}" th:object="${student}">
+        <h3>Edit Student by id</h3>
+        <input class="InputType-1" type="text" th:field="*{id}" placeholder="Enter ID of Student"/><p/>
+        <input class="InputType-1" type="text" th:field="*{name}" placeholder="Name"/>
+            <div th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+        <input class="InputType-1" type="text" th:field="*{surname}" placeholder="Surname"/>
+            <div th:if = "${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
+        <input class="InputType-1" type="text" th:field="*{patronymic}" placeholder="Patronymic"/>
+        <button class="button" type="submit">Patch</button>
+    </form>
+
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/deleteStudent'})}">
+        <h3>Delete Student by ID</h3>
+        <input class="InputType-1" type="text" name="studentID" placeholder="Enter ID of Student"/>
+        <button class="button" type="submit">Delete</button>
+    </form>
+
+</div>
+
+<div class="bblock">
+    <table class="table">
+        <caption style="color: blueviolet">Variants Table</caption>
         <tr>
-            <th>
-                <table style="border: 2px solid gray">
-                    <caption style="color: blueviolet">Students Table</caption>
-                    <tr style="border: 2px solid gray">
-                        <th style="border: 2px solid gray">Id</th>
-                        <th style="border: 2px solid gray">Name</th>
-                        <th style="border: 2px solid gray">Surname</th>
-                        <th style="border: 2px solid gray">Patronymic</th>
-                    </tr>
-                    <tr style="border: 2px solid gray" th:each="student: ${studentsTable}">
-                        <th style="border: 2px solid gray" th:text="${student.getId()}"></th>
-                        <th style="border: 2px solid gray" th:text="${student.getName()}"></th>
-                        <th style="border: 2px solid gray" th:text="${student.getSurname()}"></th>
-                        <th style="border: 2px solid gray" th:text="${student.getPatronymic()}"></th>
-                    </tr>
-                </table>
-
-                <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/addOne'})}" th:object="${student}">
-                    <h3>Add student</h3>
-                    <input type="text" th:field="*{name}" placeholder="Name"/>
-                    <div th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
-                    <input type="text" th:field="*{surname}" placeholder="Surname"/>
-                    <div th:if = "${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
-                    <input type="text" th:field="*{patronymic}" placeholder="Patronymic"/>
-                    <button type="submit">Add</button>
-                    <div style="color: crimson" th:text="${ExistingWarning}"></div>
-                </form>
-                <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/addStudFromFile'})}" th:object="${path}">
-                    <h3>Add students from file</h3>
-                    <input type="text" th:field="*{path}" placeholder="Full path to file"/>
-                    <button type="submit">Load</button>
-                    <div style="color: crimson" th:text="${NoFileWarning}"></div>
-                </form>
-                <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/deleteStudent'})}">
-                    <h3>Delete Student by ID</h3>
-                    <input type="text" name="studentID" placeholder="Enter ID of Student"/>
-                    <button type="submit">Delete</button>
-                </form>
-
-            </th>
-            <th>
-                <table style="border: 2px solid gray">
-                    <caption style="color: blueviolet">Variants Table</caption>
-                    <tr style="border: 2px solid gray">
-                        <th style="border: 2px solid gray">Id</th>
-                        <th style="border: 2px solid gray">VariantName</th>
-                    </tr>
-                    <tr style="border: 2px solid gray" th:each="variant: ${variantTable}">
-                        <th style="border: 2px solid gray" th:text="${variant.getId()}"></th>
-                        <th style="border: 2px solid gray" th:text="${variant.getPathToFile()}"></th>
-                    </tr>
-                </table>
-                <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/addVariant'})}" th:object="${variant}">
-                    <h3>Add student</h3>
-                    <input type="text" th:field="*{pathToFile}" placeholder="Variant's name"/>
-                    <div th:if = "${#fields.hasErrors('pathToFile')}" th:errors="*{pathToFile}">Name error</div>
-                    <button type="submit">Add</button>
-                </form>
-            </th>
+            <th>Id</th>
+            <th>VariantName</th>
+        </tr>
+        <tr th:each="variant: ${variantTable}">
+            <th th:text="${variant.getId()}"></th>
+            <th th:text="${variant.getPathToFile()}"></th>
         </tr>
     </table>
+
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/addVariant'})}" th:object="${variant}">
+        <h3>Add variant</h3>
+        <input class="InputType-1" type="text" th:field="*{pathToFile}" placeholder="Variant's name"/>
+        <div th:if = "${#fields.hasErrors('pathToFile')}" th:errors="*{pathToFile}">Name error</div>
+        <button class="button" type="submit">Add</button>
+    </form>
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/generateVar'})}">
+        <h3>Generate Variants</h3>
+        <input class="InputType-1" type="text" name="varCount" placeholder="Variant's count"/>
+        <button class="button" type="submit">Generate</button>
+    </form>
+
+</div>
 </body>
 </html>
+<style>
+    .InputType-1 {
+        border-radius:10px;
+        border: 1px solid #eee;
+        transition: .3s border-color;
+    }
+    .table {
+        width: 20%;
+        margin-bottom: 1px;
+        border-collapse: collapse;
+        overflow-y: auto;
+    }
+    .table th {
+        font-weight: bold;
+        padding: 5px;
+        background: #efefef;
+        border: 1px solid #dddddd;
+    }
+    .table td {
+        border: 1px solid #dddddd;
+        padding: 5px;
+    }
+    .table tr td:first-child, .table tr th:first-child {
+        border-left: none;
+    }
+    .table tr td:last-child, .table tr th:last-child {
+        border-right: none;
+    }
+    .bblock {
+        float: left; /*Задаем обтекание*/
+        width: 30%; /*Фиксируем ширину блока*/
+        height: 600px;
+        margin-right: 50px;
+        overflow-y: auto;
+    }
+    .button {
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+        border-radius: 12px;
+    }
+    .button:hover {
+        background-color: #4CAF50; /* Green */
+        color: white;
+        border-radius: 12px;
+    }
+</style>

@@ -72,9 +72,22 @@ public class DataBasesController {
     @PostMapping("/dblist/{id}/addVariant")
     public String addVariant(@PathVariable("id") int id, @ModelAttribute("variant") @Valid Variant variant, Errors errors){
         if (errors.hasErrors()){
-            return "redirect:/dblist"+id;
+            return "redirect:/dblist/"+id;
         }
         dbRepo.GetById(id).getVariantsRepo().Post(variant);
+        return "redirect:/dblist/"+id;
+    }
+    @PostMapping("/dblist/{id}/patchStudent")
+    public String patchStudent(@PathVariable("id") int id, @ModelAttribute("student") @Valid Student student, Errors errors){
+        if (errors.hasErrors()){
+            return "redirect:/dblist/"+id;
+        }
+        dbRepo.GetById(id).getStudentsRepo().PatchById(student.getId(), student);
+        return "redirect:/dblist/"+id;
+    }
+    @PostMapping("/dblist/{id}/generateVar")
+    public String generateVariants(@PathVariable("id") int id, int varCount){
+        dbRepo.GetById(id).getVariantsRepo().GenerateVariants(varCount);
         return "redirect:/dblist/"+id;
     }
 }

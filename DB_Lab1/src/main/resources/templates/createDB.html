@@ -10,9 +10,21 @@
         <input type="text" th:field="*{name}" placeholder="Enter DB name"/>
             <div th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
             <div style="color: crimson" th:text="${ExistsWarning}"></div>
-        <button type="submit">Submit</button>
+        <button class="button" type="submit">Submit</button>
     </form>
     <p/>
     <a th:href="@{/}">Return to main menu</a>
 </body>
 </html>
+<style>
+    .button {
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+        border-radius: 12px;
+    }
+    .button:hover {
+        background-color: #4CAF50; /* Green */
+        color: white;
+        border-radius: 12px;
+    }
+</style>

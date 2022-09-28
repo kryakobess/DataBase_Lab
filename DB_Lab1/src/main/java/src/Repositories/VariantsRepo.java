@@ -97,7 +97,7 @@ public class VariantsRepo implements RepoInterface<Variant>, Serializable {
 
     public void GenerateVariants(int count){
         for (int i = 1; i <= count; ++i){
-            this.Post(new Variant("var"+i));
+            this.Post(new Variant("var"+(this.idSequence+1)));
         }
     }
 }
