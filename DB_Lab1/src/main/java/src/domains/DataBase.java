@@ -8,6 +8,7 @@ import src.Repositories.TestingTableRepo;
 import src.Repositories.VariantsRepo;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class DataBase {
     private int id;
     @NotBlank(message = "You have to write name!")
+    @Size(max = 15, message = "Come up with shorter name(maximum 15 symbols)")
     private String name;
     private StudentsRepo studentsRepo;
     private VariantsRepo variantsRepo;

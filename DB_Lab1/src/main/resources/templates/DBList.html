@@ -5,12 +5,65 @@
   <title>List</title>
 </head>
 <body>
-  <a th:href="@{/}">Return to main menu</a>
-  <h3>Your DBs:</h3>
+<p style="width: 17%"><a class="butt" th:href="@{/}">Return to main menu</a></p>
+  <p class="Pi" style="top: 10%">Your DBs:</p>
   <div th:each="db : ${dbList}">
     <div>
-      <a th:href="@{/dblist/{id}(id = ${db.getId()})}" th:text="${db.getName()}"></a>
+      <p class="bblockPI"><a class="butt" th:href="@{/dblist/{id}(id = ${db.getId()})}" th:text="${db.getName()}"></a></p>
     </div>
   </div>
 </body>
 </html>
+<style>
+  body{
+    background: black;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: .1em
+  }
+  p.bblockPI{
+    position: relative;
+    height: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 15%;
+    top: 100px;
+    left: 50%;
+    transform: translate(-50%);
+  }
+
+  a.butt{
+    display: block;
+    color: white;
+    text-decoration: none;
+    position: relative;
+  }
+
+  a.butt::after{
+    content: "";
+    background: white;
+    mix-blend-mode: exclusion;
+    width: calc(100% + 20px);
+    height: 0;
+    position: absolute;
+    bottom: -4px;
+    left: -10px;
+    transition: all .3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  }
+
+  a.butt:hover::after{
+    height: calc(100% + 8px)
+  }
+
+  .Pi{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    color: white;
+  }
+
+</style>
