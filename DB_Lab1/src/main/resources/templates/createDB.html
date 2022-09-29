@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns="http://www.w3.org/1999/html">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>DataBase Creation</title>
 </head>
 <body>
-    <p class="Pi" style="top: 10%">Create your DataBase</p>
-        <form th:method="POST" th:action="@{/createDB}" th:object="${newDB}">
-            <input class="input" style="top: 20%" type="text" th:field="*{name}" placeholder="Enter DB name"/>
-                <div th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
-                <div style="color: crimson" th:text="${ExistsWarning}"></div>
-          <p class="Pi" style="top: 22%;"><button class="button" type="submit">Submit</button></p>
-        </form>
-        <p/>
-        <a th:href="@{/}">Return to main menu</a>
+<p class="Pi" style="top: 10%">Create your DataBase</p>
+<form th:method="POST" th:action="@{/createDB}" th:object="${newDB}">
+    <input class="input" style="top: 20%" type="text" th:field="*{name}" placeholder="Enter DB name"/>
+    <div th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+    <div style="color: crimson" th:text="${ExistsWarning}"></div>
+    <p class="Pi" style="top: 22%;"><button class="button" type="submit">Submit</button></p>
+</form>
+<p/>
+<a th:href="@{/}">Return to main menu</a>
 </body>
 </html>
 
