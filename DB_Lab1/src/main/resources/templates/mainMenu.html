@@ -5,46 +5,72 @@
     <title>Main page</title>
 </head>
 <body>
-    <h1>Main menu</h1>
-        <a class="button21" th:href="@{/createDB}">Create new DataBase</a>
-    </p>
-        <a class="button21" th:href="@{/dblist}">Show my DBs</a>
+    <p class="bblockPI2" style="top: 10%">Main menu</p>
+        <p class="bblockPI" style="top: 45%"><a th:href="@{/createDB}">Create new DataBase</a></p>
+        <p class="bblockPI" style="top: 55%"><a th:href="@{/dblist}">Show my DBs</a></p>
     </body>
 </html>
 <style>
 
-    a.button21 {
-        display: inline-block;
-        width: 10em;
-        height: 2em;
-        line-height: 2em;
-        vertical-align: middle;
-        text-align: center;
+    body{
+        background: black;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: .1em
+    }
+
+    p.bblockPI{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%);
+    }
+
+    p.bblockPI2{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%);
+        color: white;
+    }
+
+    a{
+        display: block;
+        color: white;
         text-decoration: none;
-        user-select: none;
-        color: rgb(0,0,0);
-        outline: none;
-        border: 1px solid rgba(0,0,0,.4);
-        border-top-color: rgba(0,0,0,.3);
-        border-radius: 2px;
-        background: linear-gradient(rgb(255,255,255), rgb(240,240,240));
-        box-shadow:
-                0 0 3px rgba(0,0,0,0) inset,
-                0 1px 1px 1px rgba(255,255,255,.2),
-                0 -1px 1px 1px rgba(0,0,0,0);
-        transition: .2s ease-in-out;
+        position: relative;
     }
-    a.button21:hover:not(:active) {
-        box-shadow:
-                0 0 3px rgba(0,0,0,0) inset,
-                0 1px 1px 1px rgba(0,255,255,.5),
-                0 -1px 1px 1px rgba(0,255,255,.5);
+
+    a::after{
+        content: "";
+        background: white;
+        mix-blend-mode: exclusion;
+        width: calc(100% + 20px);
+        height: 0;
+        position: absolute;
+        bottom: -4px;
+        left: -10px;
+        transition: all .3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     }
-    a.button21:active {
-        background: linear-gradient(rgb(250,250,250), rgb(235,235,235));
-        box-shadow:
-                0 0 3px rgba(0,0,0,.5) inset,
-                0 1px 1px 1px rgba(255,255,255,.4),
-                0 -1px 1px 1px rgba(0,0,0,.1);
+
+    a:hover::after{
+        height: calc(100% + 8px)
+    }
+
+    /* The End */
+
+    .note{
+        top: auto;
+        bottom: 0;
+        color: #ddd;
+        font-size: 13px;
+        text-transform: none;
+        font-weight: 300;
+        text-align: center;
+        padding: 10px;
+        width: 100%;
+        max-width: 500px;
     }
 </style>
