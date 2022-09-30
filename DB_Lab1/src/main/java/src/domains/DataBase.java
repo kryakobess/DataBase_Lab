@@ -9,13 +9,17 @@ import src.Repositories.VariantsRepo;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @ToString
-public class DataBase {
+public class DataBase implements Serializable{
+    @Serial
+    private static final long serialVersionUID = 899L;
     private int id;
     @NotBlank(message = "You have to write name!")
     @Size(max = 15, message = "Come up with shorter name(maximum 15 symbols)")

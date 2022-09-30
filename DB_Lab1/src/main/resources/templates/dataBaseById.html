@@ -7,6 +7,14 @@
 <body>
     <a th:href="@{/}">Return to main menu</a>
     <h3 th:text="'Your DB: ' + ${db.getName()}">Your DB:</h3>
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/saveDB'})}">
+        <input class="InputType-1" type="text" name="path" placeholder="Enter path to file to save DB"/>
+        <button class="button" type="submit">Save</button>
+    </form>
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/loadDB'})}">
+        <input class="InputType-1" type="text" name="path" placeholder="Enter path to file to load DB"/>
+        <button class="button" type="submit">Load</button>
+    </form><p/>
 <div class="bblock1">
     <table class="table">
         <caption style="color: blueviolet">Students Table</caption>
@@ -150,21 +158,25 @@
 </html>
 <style>
     .InputType-1 {
+        background: rgba(230, 230, 250, 0.1);
         border-radius:10px;
         border: 1px solid #eee;
         transition: .3s border-color;
+        color: #eeeeee;
     }
     .table {
         width: 20%;
         margin-bottom: 1px;
         border-collapse: collapse;
         overflow-y: auto;
+        color: #dddddd;
+        font-size: 12px;
     }
     .table th {
         font-weight: bold;
         padding: 5px;
-        background: #efefef;
-        border: 1px solid #dddddd;
+        background: gray;
+        border: 1px solid dimgrey;
     }
     .table td {
         border: 1px solid #dddddd;
@@ -194,10 +206,20 @@
         -webkit-transition-duration: 0.4s; /* Safari */
         transition-duration: 0.4s;
         border-radius: 12px;
+        background: rgba(230, 230, 250, 0.6);
     }
     .button:hover {
-        background-color: #4CAF50; /* Green */
+        background-color: purple; /* Green */
         color: white;
         border-radius: 12px;
+    }
+    body{
+        background: rgba(21, 23,25, 1);
+        font-family: 'Source Sans Pro', sans-serif;
+        color: #dddddd;
+        font-size: 14px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: .1em
     }
 </style>

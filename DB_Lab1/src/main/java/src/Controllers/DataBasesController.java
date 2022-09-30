@@ -9,6 +9,8 @@ import src.domains.DataBase;
 import src.domains.Student;
 import src.domains.Variant;
 
+import java.io.IOException;
+
 @Controller
 public class DataBasesController {
     private final DBRepo dbRepo;
@@ -39,5 +41,17 @@ public class DataBasesController {
         model.addAttribute("student", new Student());
         model.addAttribute("variant", new Variant());
         return "dataBaseById";
+    }
+    @PostMapping("/dblist/{id}/saveDB")
+    public String saveDB(@PathVariable("id") int id, String path) throws IOException {
+        if (path.isEmpty()) return "redirect:/dblist/"+id;
+        fileService.saveObject(dbRepo.GetById(id), path);
+        return "redirect:/dblist/"+id;
+    }
+    @PostMapping("/dblist/{id}/loadDB")
+    public String loadDB(@PathVariable("id") int id, String path) throws IOException, ClassNotFoundException {
+        if (path.isEmpty()) return "redirect:/dblist/"+id;
+        dbRepo.PatchById(id,(DataBase) fileService.loadObject(path));
+        return "redirect:/dblist/"+id;
     }
 }

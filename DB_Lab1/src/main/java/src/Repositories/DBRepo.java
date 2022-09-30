@@ -54,7 +54,11 @@ public class DBRepo implements RepoInterface<DataBase>{
     }
     @Override
     public void PatchById(long existedId, DataBase editedElement) {
-
+        for (int i = 0; i < this.dataBaseList.size(); ++i){
+            if (this.dataBaseList.get(i).getId() == existedId){
+                this.dataBaseList.set(i, editedElement);
+            }
+        }
     }
 
     @Override
