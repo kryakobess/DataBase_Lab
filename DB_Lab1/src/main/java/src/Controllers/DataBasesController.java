@@ -51,7 +51,9 @@ public class DataBasesController {
     @PostMapping("/dblist/{id}/loadDB")
     public String loadDB(@PathVariable("id") int id, String path) throws IOException, ClassNotFoundException {
         if (path.isEmpty()) return "redirect:/dblist/"+id;
-        dbRepo.PatchById(id,(DataBase) fileService.loadObject(path));
+        DataBase loadedDB = (DataBase) fileService.loadObject(path);
+        loadedDB.setId(id);
+        dbRepo.PatchById(id,loadedDB);
         return "redirect:/dblist/"+id;
     }
 }
