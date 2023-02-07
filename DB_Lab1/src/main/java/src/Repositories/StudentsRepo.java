@@ -1,6 +1,6 @@
-package Repositories;
+package src.Repositories;
 
-import domains.Student;
+import src.domains.Student;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,7 +27,7 @@ public class StudentsRepo implements RepoInterface<Student>, Serializable {
     }
 
     @Override
-    public void Post(Student element) {
+    public int Post(Student element) {
         boolean exists = false;
         for (Student st : this.studentsList) {
             exists = st.getName().equals(element.getName()) &&
@@ -43,8 +43,9 @@ public class StudentsRepo implements RepoInterface<Student>, Serializable {
             student.setSurname(element.getSurname());
             student.setPatronymic(element.getPatronymic());
             this.studentsList.add(student);
+            return 0;
         }
-        else System.out.println("Element with such name already exists!");
+        else return -1;
     }
 
     @Override

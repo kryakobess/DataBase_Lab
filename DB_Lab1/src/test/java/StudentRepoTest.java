@@ -1,6 +1,5 @@
-import Repositories.RepoInterface;
-import Repositories.StudentsRepo;
-import domains.Student;
+import src.Repositories.StudentsRepo;
+import src.domains.Student;
 import org.junit.Assert;
 import org.junit.Test;
 

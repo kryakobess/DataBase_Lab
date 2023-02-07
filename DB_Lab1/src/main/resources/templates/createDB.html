@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>DataBase Creation</title>
+</head>
+<body>
+<p class="Pi" style="top: 10%">Create your DataBase</p>
+<form th:method="POST" th:action="@{/createDB}" th:object="${newDB}">
+    <input class="input" style="top: 20%" type="text" th:field="*{name}" placeholder="Enter DB name"/>
+    <div style="color: orangered" th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+    <p style="color: orangered" th:text="${ExistsWarning}"/>
+    <p class="Pi" style="top: 22%;"><button class="button" type="submit">Submit</button></p>
+</form>
+<p/>
+<a th:href="@{/}">Return to main menu</a>
+</body>
+</html>
+
+<style>
+    .button {
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+        border-radius: 12px;
+        background: rgba(230, 230, 250, 0.6);
+    }
+    .button:hover {
+        background-color: purple;
+        color: white;
+        border-radius: 12px;
+    }
+    body{
+        background: rgba(21, 23,25, 1);
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: .1em
+    }
+    .Pi{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%);
+        color: white;
+    }
+    .input{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%);
+        background: rgba(230, 230, 250, 0.1);
+        color: #eeeeee;
+        border-radius:10px;
+        border: 1px solid #eee;
+        transition: .3s border-color;
+    }
+
+</style>

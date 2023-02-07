@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title th:text="${db.getName()}"></title>
+</head>
+<body>
+    <a th:href="@{/}">Return to main menu</a>
+    <h3 th:text="'Your DB: ' + ${db.getName()}">Your DB:</h3>
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/saveDB'})}">
+        <input class="InputType-1" type="text" name="path" placeholder="Enter path to file to save DB"/>
+        <button class="button" type="submit">Save</button>
+    </form>
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/loadDB'})}">
+        <input class="InputType-1" type="text" name="path" placeholder="Enter path to file to load DB"/>
+        <button class="button" type="submit">Load</button>
+    </form><p/>
+<div class="bblock1">
+    <table class="table">
+        <caption style="color: blueviolet">Students Table</caption>
+        <thead>
+            <tr><th>Id</th><th>Name</th><th>Surname</th><th>Patronymic</th></tr>
+        </thead>
+        <tbody>
+            <tr th:each="student: ${studentsTable}">
+                <th th:text="${student.getId()}"></th>
+                <th th:text="${student.getName()}"></th>
+                <th th:text="${student.getSurname()}"></th>
+                <th th:text="${student.getPatronymic()}"></th>
+            </tr>
+        </tbody>
+    </table>
+
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/addOne'})}" th:object="${student}">
+        <h3>Add student</h3>
+        <input class="InputType-1" type="text" th:field="*{name}" placeholder="Name"/>
+        <div th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+        <input class="InputType-1" type="text" th:field="*{surname}" placeholder="Surname"/>
+        <div th:if = "${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
+        <input class="InputType-1" type="text" th:field="*{patronymic}" placeholder="Patronymic"/>
+        <button class="button" type="submit">Add</button>
+        <div style="color: crimson" th:text="${ExistingWarning}"></div>
+    </form>
+
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/addStudFromFile'})}">
+        <h3>Add students from file</h3>
+        <input class="InputType-1" name="path" type="text" placeholder="Full path to file"/>
+        <button class="button" type="submit">Load</button>
+        <div style="color: crimson" th:text="${NoFileWarning}"></div>
+    </form>
+
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/patchStudent'})}" th:object="${student}">
+        <h3>Edit Student by id</h3>
+        <input class="InputType-1" type="text" th:field="*{id}" placeholder="Enter ID of Student"/><p/>
+        <input class="InputType-1" type="text" th:field="*{name}" placeholder="Name"/>
+            <div th:if = "${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+        <input class="InputType-1" type="text" th:field="*{surname}" placeholder="Surname"/>
+            <div th:if = "${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
+        <input class="InputType-1" type="text" th:field="*{patronymic}" placeholder="Patronymic"/>
+        <button class="button" type="submit">Patch</button>
+    </form>
+
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/deleteStudent'})}">
+        <h3>Delete Student by ID</h3>
+        <input class="InputType-1" type="text" name="studentID" placeholder="Enter ID of Student"/>
+        <button class="button" type="submit">Delete</button>
+    </form>
+
+</div>
+
+<div class="bblock2">
+    <table class="table">
+        <caption style="color: blueviolet">Variants Table</caption>
+        <tr>
+            <th>Id</th>
+            <th>VariantName</th>
+        </tr>
+        <tr th:each="variant: ${variantTable}">
+            <th th:text="${variant.getId()}"></th>
+            <th th:text="${variant.getPathToFile()}"></th>
+        </tr>
+    </table>
+
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/addVariant'})}" th:object="${variant}">
+        <h3>Add variant</h3>
+        <input class="InputType-1" type="text" th:field="*{pathToFile}" placeholder="Variant's name"/>
+        <div th:if = "${#fields.hasErrors('pathToFile')}" th:errors="*{pathToFile}">Name error</div>
+        <button class="button" type="submit">Add</button>
+    </form>
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/generateVar'})}">
+        <h3>Generate Variants</h3>
+        <input class="InputType-1" type="text" name="varCount" placeholder="Variant's count"/>
+        <button class="button" type="submit">Generate</button>
+    </form>
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/patchVariant'})}" th:object="${variant}">
+        <h3>Edit Variant by id</h3>
+        <input class="InputType-1" type="text" th:field="*{id}" placeholder="Enter ID of Variant"/><p/>
+        <input class="InputType-1" type="text" th:field="*{pathToFile}" placeholder="Variant name"/>
+        <div th:if = "${#fields.hasErrors('pathToFile')}" th:errors="*{pathToFile}">Name error</div>
+        <button class="button" type="submit">Patch</button>
+    </form>
+
+    <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/deleteVariant'})}">
+        <h3>Delete Variant by ID</h3>
+        <input class="InputType-1" type="text" name="variantID" placeholder="Enter ID of Variant"/>
+        <button class="button" type="submit">Delete</button>
+    </form>
+</div>
+
+    <div class="bblock1" style="width: 15%">
+        <table class="table">
+            <caption style="color: blueviolet">TestingTable</caption>
+            <tr>
+                <th>Student_ID</th>
+                <th>Variant_ID</th>
+            </tr>
+            <tr th:each="testingTable: ${db.getTestingTableRepo().getTestingTableList()}">
+                <th th:text="${testingTable.getStudentId()}"></th>
+                <th th:text="${testingTable.getVariantId()}"></th>
+            </tr>
+        </table>
+
+        <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/generateTT'})}">
+            <p/>
+            <button class="button" type="submit">Generate TestingTable</button>
+        </form>
+
+        <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/addTTFromFile'})}">
+            <h3>Add TestingTable from file</h3>
+            <input class="InputType-1" name="path" type="text" placeholder="Full path to file"/>
+            <button class="button" type="submit">Load</button>
+            <div style="color: crimson" th:text="${NoFileWarning}"></div>
+        </form>
+    </div>
+
+    <div class="bblock1" style="width: 30%" th:if="${not db.getTestingTableRepo().getTestingTableList().isEmpty()}">
+        <table class="table">
+            <caption style="color: blueviolet">Students&Variants</caption>
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Patronymic</th>
+                <th>Variant</th>
+            </tr>
+            <tr th:each="studentsVariants: ${db.getStudentsVariantList()}">
+                <th th:text="${studentsVariants.getStudent().getName()}"/>
+                <th th:text="${studentsVariants.getStudent().getSurname()}"/>
+                <th th:text="${studentsVariants.getStudent().getPatronymic()}"/>
+                <th th:text="${studentsVariants.getVariant().getPathToFile()}"/>
+            </tr>
+        </table>
+        <form th:method="POST" th:action="@{/dblist/{id}(id=${db.getId() + '/showSTV'})}">
+            <p/>
+            <button class="button" type="submit">Show Students&Variants by TestingTable</button>
+        </form>
+    </div>
+</body>
+</html>
+<style>
+    .InputType-1 {
+        background: rgba(230, 230, 250, 0.1);
+        border-radius:10px;
+        border: 1px solid #eee;
+        transition: .3s border-color;
+        color: #eeeeee;
+    }
+    .table {
+        width: 20%;
+        margin-bottom: 1px;
+        border-collapse: collapse;
+        overflow-y: auto;
+        color: #dddddd;
+        font-size: 12px;
+    }
+    .table th {
+        font-weight: bold;
+        padding: 5px;
+        background: gray;
+        border: 1px solid dimgrey;
+    }
+    .table td {
+        border: 1px solid #dddddd;
+        padding: 5px;
+    }
+    .table tr td:first-child, .table tr th:first-child {
+        border-left: none;
+    }
+    .table tr td:last-child, .table tr th:last-child {
+        border-right: none;
+    }
+    .bblock1 {
+        float: left; /*Задаем обтекание*/
+        width: 25%; /*Фиксируем ширину блока*/
+        height: 600px;
+        margin-right: 50px;
+        overflow-y: auto;
+    }
+    .bblock2 {
+        float: left; /*Задаем обтекание*/
+        width: 15%; /*Фиксируем ширину блока*/
+        height: 600px;
+        margin-right: 50px;
+        overflow-y: auto;
+    }
+    .button {
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+        border-radius: 12px;
+        background: rgba(230, 230, 250, 0.6);
+    }
+    .button:hover {
+        background-color: purple; /* Green */
+        color: white;
+        border-radius: 12px;
+    }
+    body{
+        background: rgba(21, 23,25, 1);
+        font-family: 'Source Sans Pro', sans-serif;
+        color: #dddddd;
+        font-size: 14px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: .1em
+    }
+</style>

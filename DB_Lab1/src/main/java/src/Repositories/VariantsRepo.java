@@ -1,7 +1,6 @@
-package Repositories;
+package src.Repositories;
 
-import domains.Student;
-import domains.Variant;
+import src.domains.Variant;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,7 +28,7 @@ public class VariantsRepo implements RepoInterface<Variant>, Serializable {
 
 
     @Override
-    public void Post(Variant element) {
+    public int Post(Variant element) {
         boolean exists = false;
         for (Variant var : this.variantsList) {
             exists = var.getPathToFile().equals(element.getPathToFile());
@@ -41,7 +40,9 @@ public class VariantsRepo implements RepoInterface<Variant>, Serializable {
             elementsCount++;
             variant.setPathToFile(element.getPathToFile());
             this.variantsList.add(variant);
+            return 0;
         }
+        else return -1;
     }
 
     @Override
@@ -96,7 +97,7 @@ public class VariantsRepo implements RepoInterface<Variant>, Serializable {
 
     public void GenerateVariants(int count){
         for (int i = 1; i <= count; ++i){
-            this.Post(new Variant("var"+i));
+            this.Post(new Variant("var"+(this.idSequence+1)));
         }
     }
 }
